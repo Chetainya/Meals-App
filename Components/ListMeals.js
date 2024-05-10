@@ -1,11 +1,20 @@
-import { Image, Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 
-function ListMeals({title , imageUrl , complexity , affordability , duration}){
+function ListMeals({id , title , imageUrl , complexity , affordability , duration }){
+
+    const navigation = useNavigation();
+
+    function pressHandeler(){
+        navigation.navigate('Meals' , {
+            id : id
+        });
+    }
 
 return (
    
     <View style={styles.rootContainer}>
-        <Pressable>
+        <Pressable onPress={pressHandeler}>
             <View>
                 <View>
                 <Image source={{uri : imageUrl}} style={styles.image} />

@@ -12,7 +12,7 @@ function CategoryScreen({navigation}){
 
 
     function listRender(itemData){
-        console.log(itemData.item);
+        
         function pressHandeler(){
             navigation.navigate("SpecificList" , {
                 id : itemData.item.id
