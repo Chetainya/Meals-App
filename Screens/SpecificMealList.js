@@ -2,6 +2,7 @@ import { FlatList, StyleSheet, Text, View } from "react-native";
 import { CATEGORIES, MEALS } from "../data/dummy-data";
 import ListMeals from "../Components/ListMeals";
 import { useLayoutEffect } from "react";
+import FlatListUI from "../Components/FlatListUI";
 
 function SpecificMealList({ route, navigation }) {
   const id = route.params.id;
@@ -18,32 +19,25 @@ function SpecificMealList({ route, navigation }) {
   
 
   return (
-    <FlatList
-      style={styles.ViewContainer}
-      data={dataToRender}
-      keyExtractor={(item) => item.id}
-      renderItem={(itemData) => {
-        {console.log(itemData.item.id)}
-        return <ListMeals
-           id={itemData.item.id}
-          title={itemData.item.title}
-          imageUrl={itemData.item.imageUrl}
-          affordability={itemData.item.affordability}
-          duration={itemData.item.duration}
-          complexity={itemData.item.complexity}
+    <FlatListUI data={dataToRender}></FlatListUI>
+    // <FlatList
+    //   style={styles.ViewContainer}
+    //   data={dataToRender}
+    //   keyExtractor={(item) => item.id}
+    //   renderItem={(itemData) => {
+    //     {console.log(itemData.item.id)}
+    //     return <ListMeals
+    //        id={itemData.item.id}
+    //       title={itemData.item.title}
+    //       imageUrl={itemData.item.imageUrl}
+    //       affordability={itemData.item.affordability}
+    //       duration={itemData.item.duration}
+    //       complexity={itemData.item.complexity}
           
-        ></ListMeals>
-      }}
-    />
+    //     ></ListMeals>
+    //   }}
+    // />
   );
 }
 
 export default SpecificMealList;
-const styles = StyleSheet.create({
-  ViewContainer: {
-    flex: 1,
-    paddingBottom: 50,
-    padding: 16,
-    margin: 4,
-  },
-});

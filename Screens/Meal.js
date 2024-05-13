@@ -1,19 +1,31 @@
-import { startTransition, useLayoutEffect } from "react";
+import { startTransition, useContext, useLayoutEffect } from "react";
 import { Button, Image, StyleSheet, Text , View , ScrollView, Platform } from "react-native";
 import {  MEALS } from "../data/dummy-data";
+import IconButton from "../Components/IconButton";
+import { FavouriteContext } from "../Store/FavoutiteContextProvider";
 
 
 function Meals({route , navigation}){
+    const favouriteMeals = useContext(FavouriteContext)
     const id = route.params.id;
+    const isFavourite = favouriteMeals.ids.includes(id);
     
     const mealInfo = MEALS.find((category) => category.id === id);
+
+    function changeFavouriteHandeler(){
+        if(isFavourite){
+            favouriteMeals.removeFavourite(id)
+        }else{
+            favouriteMeals.addFavourite(id)
+        }
+    }
 
     useLayoutEffect(() => {
         navigation.setOptions({
             title : mealInfo.title,
-            headerRight : () => <Button title="Tap Me!" onPress={console.log('Pressed')}></Button>
+            headerRight : () => <IconButton name={isFavourite ? 'star' : 'staro'} color='white' onPress={changeFavouriteHandeler} />
         })
-    } , [])
+    } , [navigation , changeFavouriteHandeler])
     return (
     <ScrollView style={styles.container}>
             <View>
@@ -28,13 +40,13 @@ function Meals({route , navigation}){
                 <Text style={styles.title}>Ingridients</Text>
                 <View style={styles.infoContainer}>
                     {mealInfo.ingredients.map((ingredient) => {
-                        return <Text style={styles.infoContainerText}>{ingredient}</Text>
+                        return <Text key={ingredient} style={styles.infoContainerText}>{ingredient}</Text>
                     })}
                 </View>
                 <Text style={styles.title}>Steps</Text>
                 <View style={styles.infoContainer}>
                     {mealInfo.steps.map((step) => {
-                        return <Text style={styles.infoContainerText}>{step}</Text>
+                        return <Text key={step} style={styles.infoContainerText}>{step}</Text>
                     })}
                 </View>
             </ScrollView>
